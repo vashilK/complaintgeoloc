@@ -1,0 +1,300 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Complaint App With Geo-Location</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1,width=device-width">
+  <meta charset="utf-8">
+  <!-- FILES FOR LOGIN PAGE -->
+  <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" type="text/css" href="css/util.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <!-- FILES FOR LEAFLET MAP -->
+  <link rel="stylesheet" href="leaflet/leaflet.css" />
+  <script src="leaflet/leaflet.js"></script>
+  <link rel="stylesheet" type="text/css" href="js/jquery.mobile-1.4.5.css">
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery.mobile-1.4.5.js"></script>
+  <script src="cordova.js"></script>
+  <style>
+    .title {
+      align-items: center;
+    }
+
+    .greet {
+      width: inherit;
+      margin-top: 80px;
+      margin-left: 10px;
+      margin-right: 10px;
+
+    }
+
+    .center {
+      margin-left: 10px;
+      margin-right: 20px;
+    }
+
+    #mainpglogo {
+      width: 35%;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    #smalllogo,
+    #smalllogo1 {
+      width: 11.5%;
+    }
+
+    .topcolor {
+      background-color: #f2f2f2;
+      text-align: left;
+      height: 50px;
+    }
+
+    .botnav {
+      height: 50px;
+      align-items: center;
+    }
+
+    .zoli {
+      background-color: green;
+    }
+
+    #zo {
+      background-color: #ff8080;
+      color: white;
+      font-weight: 300;
+    }
+
+    .navlogo {
+      width: 100%;
+      padding: 20px;
+    }
+
+    .alignname {
+      text-align: center;
+    }
+
+    #policeview,
+    #fireview,
+    #hospitalview,
+    #busview,
+    #atmview,
+    #municipalityview,
+    #bankview,
+    #postview,
+    #gasview {
+      display: none;
+      width: inherit;
+      height: 600px;
+    }
+
+    #camimg {
+      width: inherit;
+      height: 500px;
+    }
+
+    /**Sticks the footer to the bottom of the page */
+    [data-role=page] {
+      height: 100% !important;
+      position: relative !important;
+    }
+
+    [data-role=footer] {
+      bottom: 0;
+      position: absolute !important;
+      top: auto !important;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- MAIN LOGIN PAGE -->
+  <div data-role="page" id="login">
+    <div class="greet">
+      <form class="login100-form validate-form">
+        <span class="login100-form-title p-b-26 title">
+          Welcome
+        </span>
+        <span class="login100-form-title p-b-48">
+          <img id="mainpglogo" src="img/logo.png">
+        </span>
+        <div data-role="main" class="ui-content center">
+          <form method="" onSubmit="submitted">
+            <input name="un" type="text" placeholder="username" />
+            <input name="pw" type="password" placeholder="password" />
+            <a href="#home" id="zo" class="ui-btn ui-corner-all">Submit</a>
+          </form>
+        </div>
+
+
+        <div class="text-center p-t-115">
+          <span class="txt1">
+            Don’t have an account?
+          </span>
+
+          <a class="txt2" href="#regpg" data-transition="slide">
+            Sign Up
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- HOMEPAGE -->
+  <div data-role="page" id="home">
+    <!-- HOMEPAGE header for the page -->
+    <div data-role="header" class="topcolor">
+      <img id="smalllogo1" src="img/logo.png" class="ui-btn-left" />
+      <h3>Mauritius Services</h3>
+    </div>
+    <!-- HOMEPAGE MAIN -->
+    <div data-role="main" id="homemain" class="ui-content">
+      <br>
+      <h4>what`s nearby</h4>
+      <br>
+      <div id="buttongroup">
+        <div class="ui-grid-b">
+          <div class="ui-block-a"><a id="police" href="#policeview" data-transition="flip"><img class="navlogo" src="img/police.png"></a>
+            <h5 class="alignname">Police Station</h5>
+          </div>
+          <div class="ui-block-b"><a id="fire" href="#fireview" data-transition="flip"><img class="navlogo" src="img/firefighter.png"></a>
+            <h5 class="alignname">Fire Station</h5>
+          </div>
+          <div class="ui-block-c"><a id="hospital" href="#hospitalview" data-transition="flip"><img class="navlogo" src="img/hospital.png"></a>
+            <h5 class="alignname">Hospital</h5>
+          </div>
+        </div>
+        <br>
+        <div class="ui-grid-b">
+          <div class="ui-block-a"><a id="busstop" href="#busview" data-transition="flip"><img class="navlogo" src="img/bus-stop.png"></a>
+            <h5 class="alignname">Bus Stop</h5>
+          </div>
+          <div class="ui-block-b"><a id="atm" href="#atmview" data-transition="flip"><img class="navlogo" src="img/atm.png"></a>
+            <h5 class="alignname">ATM</h5>
+          </div>
+          <div class="ui-block-c"><a id="muni" href="#municipalityview" data-transition="flip"><img class="navlogo" src="img/city-hall.png"></a>
+            <h5 class="alignname">Municipality</h5>
+          </div>
+        </div>
+        <br>
+        <div class="ui-grid-b">
+          <div class="ui-block-a"><a id="bank" href="#bankview" data-transition="flip"><img class="navlogo" src="img/bank.png"></a>
+            <h5 class="alignname">Bank</h5>
+          </div>
+          <div class="ui-block-b"><a id="post" href="#postview"><img class="navlogo" src="img/postman.png"></a>
+            <h5 class="alignname">Post Office</h5>
+          </div>
+          <div class="ui-block-c"><a id="gas" href="#gasview"><img class="navlogo" src="img/gas.png"></a>
+            <h5 class="alignname">Filling Station</h5>
+          </div>
+        </div>
+      </div>
+      <div id="policeview"></div>
+      <div id="fireview"></div>
+      <div id="hospitalview"></div>
+      <div id="busview"></div>
+      <div id="atmview"></div>
+      <div id="municipalityview"></div>
+      <div id="bankview"></div>
+      <div id="postview"></div>
+      <div id="gasview"></div>
+    </div>
+    <!-- HOMEPAGE footer -->
+    <div data-role="footer">
+      <div data-role="navbar">
+        <ul>
+          <li><a id="home1" href="#home" data-icon="home" ico class="ui-btn-active botnav"></a></li>
+          <li><a id="camera1" data-icon="camera" class="botnav"></a></li>
+          <li><a href="#profile" data-icon="user" class="botnav"></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- CAMERA -->
+  <div data-role="page" id="camera">
+    <!-- HOMEPAGE header for the page -->
+    <div data-role="header" class="topcolor">
+      <img id="smalllogo1" src="img/logo.png" class="ui-btn-left" />
+      <h3>Mauritius Services</h3>
+    </div>
+    <!-- CAMERA MAIN -->
+    <div data-role="main" id="cameramain" class="ui-content">
+      <div id="camimg"></div>
+    </div>
+    <!-- CAMERA footer -->
+    <div data-role="footer">
+      <div data-role="navbar">
+        <ul>
+          <li><a id="home1" href="#home" data-icon="home" ico class=" botnav"></a></li>
+          <li><a href="#camera" data-icon="camera" class="botnav"></a></li>
+          <li><a href="#profile" data-icon="user" class="botnav"></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- REGISTER PAGE -->
+  <div id="regpg" data-role="page">
+    <!-- HOMEPAGE header for the page -->
+    <div data-role="header" class="topcolor">
+      <img id="smalllogo" src="img/logo.png" class="ui-btn-left" />
+      <h3>Mauritius Services</h3>
+    </div>
+    <br>
+    <!-- MAIN REGISTER PAGE -->
+    <div data-role="main" class="ui-content">
+      <form method="post">
+        <input name="Name" type="text" placeholder="Name" />
+        <input name="Surname" type="text" placeholder="Surname" />
+        <input name="NIC" type="text" placeholder="K234689001245C" />
+        <input name="Address" type="text" placeholder="Forbach Rd, Cottage" />
+        <fieldset data-role="collapsible" data-expanded-icon="carat-u" data-collapsed-icon="carat-d" data-iconpos="right">
+          <legend>Choose District </legend>
+          <div data-role="controlgroup" id="grouped">
+            <label><input name="radio" id="r1" type="radio" value="rdr">Riviere Du Rempart</label>
+            <label><input name="radio" id="r2" type="radio" value="pamp">Pamplemousses</label>
+            <label><input name="radio" id="r3" type="radio" value="p-l">Port-Louis</label>
+            <label><input name="radio" id="r4" type="radio" value="moka">Moka</label>
+            <label><input name="radio" id="r5" type="radio" value="flacq">Flacq</label>
+            <label><input name="radio" id="r6" type="radio" value="r-n">Riviere-Noire</label>
+            <label><input name="radio" id="r7" type="radio" value="p-w">Plaines-Wilhems</label>
+            <label><input name="radio" id="r8" type="radio" value="grand-port">Grand-Port</label>
+            <label><input name="radio" id="r9" type="radio" value="savanne">Savanne</label>
+          </div>
+        </fieldset>
+        <input name="email" type="email" placeholder="user@mail.com" />
+        <input name="pw" type="password" placeholder="password" />
+        <input name="Address" type="text" placeholder="confirm password" />
+        <br>
+        <input type="submit" value="submit" class="zoli" />
+      </form>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+
+    }
+    $(document).ready(function() {
+      $("#camera1").click(function() {
+        $.mobile.changePage("#camera", {reverse:false, transition:"pop"});
+        navigator.camera.getPicture(success, error, {
+          quality: 50,
+          destinationType: Camera.DestinationType.DATA_URL
+        });
+      })
+    });
+
+    function success(imageData) {
+      var img = $("#camimg");
+      img.src = "data:image/jpeg:base64," + imageData;
+    }
+
+    function error(err) {
+      console.log("error: " + err);
+    }
+  </script>
+</body>
+
+</html>

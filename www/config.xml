@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.vnk.complatinggeoloc" versionCode="10" version="2.2.2">
+
+  <!-- versionCode is optional and Android only -->
+
+  <name>Complaint with Geolocation</name>
+
+  <description>
+    A simple complaint application with maps.
+  </description>
+  <platform name="android">
+    <icon src="img/android/map.png" platform="android" width="64" height="64" density="ldpi" />
+  </platform>
+  <plugin name="cordova-plugin-geolocation" spec="~1.0.0" />
+  <plugin name="cordova-plugin-whitelist" version="1" />
+  <plugin name="cordova-plugin-camera" spec="~1.0.0" />
+
+  <author href="#" email="kissoonvashil@gmail.com">
+    Neeschal Kissoon
+  </author>
+
+</widget>
